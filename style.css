@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+}
+
+.discs-count {
+    display: flex;
+    flex-direction: row;
+}
+
+.tower {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    position: relative;
+    gap: 5px;
+}
+
+.line {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.line:before,
+.line:after {
+    content: " ";
+    position: absolute;
+    bottom: 0;
+    background: red;
+    border-radius: 20px;
+    z-index: -1;
+}
+
+.line:before {
+    width: 10px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.line:after {
+    width: 100%;
+    height: 10px;
+}
+.line.dragover:before{
+    background-color:green;
+}
+.disc {
+    --width: 12%;
+    width: 100%;
+    height: 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.disc:first-child{
+    cursor: pointer;
+}
+
+.disc.d0 {
+    background: darkseagreen;
+    width: calc(100% - (9px * 14));
+}
+
+.disc.d1 {
+    background: bisque;
+    width: calc(100% - (9px * 13));
+}
+
+.disc.d2 {
+    background: cadetblue;
+    width: calc(100% - (9px * 12));
+}
+
+.disc.d3 {
+    background: coral;
+    width: calc(100% - (9px * 11));
+}
+
+.disc.d4 {
+    background: palevioletred;
+    width: calc(100% - (9px * 10));
+}
+
+.disc.d5 {
+    background: goldenrod;
+    width: calc(100% - (9px * 9));
+}
+
+.disc.d6 {
+    background: royalblue;
+    width: calc(100% - (9px * 8));
+}
+
+.disc.d7 {
+    background: #23be23;
+    width: calc(100% - (9px * 7));
+}
+
+.disc.d8 {
+    background: #808e1f;
+    width: calc(100% - (9px * 6));
+}
+
+.disc.d9 {
+    background: #461ea2;
+    width: calc(100% - (9px * 5));
+}
+
+.disc.d10 {
+    background: #a91b96;
+    width: calc(100% - (9px * 4));
+}
+
+.disc.d11 {
+    background: #f1cc3a;
+    width: calc(100% - (9px * 3));
+}
+
+.disc.d12 {
+    background: #67fb6a;
+    width: calc(100% - (9px * 2));
+}
+
+.disc.d13 {
+    background: #ef0000;
+    width: calc(100% - (9px * 1));
+}
+
+.disc.d14 {
+    background: #ff5959;
+    width: calc(100% - (9px * 0));
+}
