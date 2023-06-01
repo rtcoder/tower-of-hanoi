@@ -2,8 +2,11 @@ const tower = document.querySelector('.tower');
 const discsCount = document.querySelector('.discs-count-number');
 const moveCounter = document.querySelector('.moves-count');
 const A = 0, B = 1, C = 2;
+const maxDiscs = 12;
+let moves = 0;
+let resolveInterval = null;
 const app = {
-    discs: 15,
+    discs: 5,
     tower: [
         [], // A
         [], // B
@@ -50,6 +53,7 @@ function drop(ev) {
     const element = document.querySelector(`[data-id="${dataId}"]`);
     if (element.parentNode !== ev.target) {
         ev.target.prepend(element);
+        incrementMoves();
     }
 }
 
@@ -74,6 +78,18 @@ function addListeners() {
             drag(e);
         }
     })
+    document.querySelector('.discs-count .up').addEventListener('click', _ => {
+        setDiscs(app.discs + 1);
+    })
+    document.querySelector('.discs-count .down').addEventListener('click', _ => {
+        setDiscs(app.discs - 1);
+    })
+    document.querySelector('.restart').addEventListener('click', _ => {
+        clearInterval(resolveInterval);
+        setMoves(0);
+        generateTower();
+    })
+    document.querySelector('.solve').addEventListener('click', automaticallyResolveTower)
 }
 
 function getMovesOrder() {
@@ -92,12 +108,14 @@ function generateTower() {
         [],
         []
     ];
+
+    setTowerDiscs();
 }
 
 function setTowerDiscs() {
     tower.querySelectorAll('.line').forEach((el, index) => {
         el.innerHTML = app.hanoi[index].map(discId =>
-            `<div class="disc d${discId}" data-id="${discId}" draggable="true">${discId}</div>`
+            `<div class="disc d${discId}" data-id="${discId}" draggable="true">${discId + 1}</div>`
         ).join('')
     });
 }
@@ -125,27 +143,60 @@ function makeLegalMove(towers) {
     }
 }
 
+function setDiscs(value) {
+    if (value > maxDiscs) {
+        value = maxDiscs;
+    }
+    if (value < 1) {
+        value = 1;
+    }
+    app.discs = value;
+    discsCount.innerHTML = app.discs;
+    clearInterval(resolveInterval);
+    setMoves(0);
+    generateTower();
+}
+
+function setMoves(value) {
+    if (value < 0) {
+        value = 0;
+    }
+    moves = value;
+    moveCounter.innerHTML = `${moves}`;
+}
+
+function incrementMoves() {
+    setMoves(moves + 1);
+}
+
 function automaticallyResolveTower() {
-    let move = 0;
+    clearInterval(resolveInterval);
+    generateTower();
+
+    setMoves(0);
+    const maxMoves = (2 ** app.discs - 1);
     const movesOrder = getMovesOrder();
+    const timeout = app.discs < 5
+        ? 1000
+        : (app.discs < 10
+                ? 100
+                : 10
+        );
 
-    const interval = setInterval(() => {
+    resolveInterval = setInterval(() => {
 
-        makeLegalMove(movesOrder[move % 3]);
+        makeLegalMove(movesOrder[moves % 3]);
         setTowerDiscs();
-        move++;
-        moveCounter.innerHTML = move;
+        incrementMoves();
 
-        // if (move === 4) {
-        if (move === (2 ** app.discs - 1)) {
-            clearInterval(interval);
+        if (moves === maxMoves) {
+            clearInterval(resolveInterval);
         }
 
-    }, 1);
+    }, timeout);
 }
 
 discsCount.innerHTML = app.discs;
 
 addListeners();
 generateTower();
-setTowerDiscs();
