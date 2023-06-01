@@ -4,7 +4,10 @@
     box-sizing: border-box;
     user-select: none;
 }
-
+body{
+    font-family: monospace;
+    background: #636363;
+    color: #ddd;}
 .app {
     display: flex;
     flex-direction: column;
@@ -17,6 +20,7 @@
     flex-direction: row;
     padding: 10px 0;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .discs-count, .moves {
@@ -25,9 +29,11 @@
     margin: 0 5px;
     align-items: center;
 }
-.discs-count-number,.moves-count{
+
+.discs-count-number, .moves-count {
     margin: 0 5px;
 }
+
 .discs-count :is(.up,.down) {
     width: 20px;
     height: 20px;
@@ -40,12 +46,14 @@
     border-radius: 5px;
     padding: 15px;
 }
-button{
+
+button {
     border: 1px solid #000;
     padding: 3px;
     margin: 0 5px;
-    cursor:pointer;
+    cursor: pointer;
 }
+
 .tower {
     width: 100%;
     max-width: 500px;
@@ -71,16 +79,22 @@ button{
     content: " ";
     position: absolute;
     bottom: 0;
-    background: red;
+    background: #ca3933;
     border-radius: 20px;
     z-index: -1;
+    box-shadow: 0 0 0 1px #000;
 }
 
 .line:before {
     width: 10px;
-    height: 100%;
+    height: calc(100% - 10px);
     left: 50%;
     transform: translateX(-50%);
+    top: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: 0 -1px 0 1px #000;
+    z-index: 1;
 }
 
 .line:after {
@@ -92,7 +106,8 @@ button{
     background-color: rgba(0, 128, 0, 0.4);
 }
 
-.line.dragover:before {
+.line.dragover:before,
+.line.dragover:after {
     background-color: green;
 }
 
@@ -105,6 +120,8 @@ button{
     border: 1px solid rgba(0, 0, 0, 0.2);
     text-align: center;
     color: #fff;
+    position:relative;
+    z-index: 2;
     text-shadow: 1px 1px 1px var(--shadow-color),
     -1px 1px 1px var(--shadow-color),
     1px -1px 1px var(--shadow-color),
