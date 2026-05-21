@@ -13,22 +13,29 @@
     <div class="top">
         <div class="discs-count">
             Discs: <div class="discs-count-number"></div>
-            <div class="up">&#x2B06;</div>
             <div class="down">&#x2B07;</div>
+            <div class="up">&#x2B06;</div>
         </div>
         <div class="moves">
             Moves: <div class="moves-count">0</div>
         </div>
-        <button class="solve">Solve</button>
-        <button class="restart">Restart</button>
+        <div class="btn-group">
+            <button class="solve">Solve</button>
+            <button class="restart">Restart</button>
+        </div>
     </div>
 
-    <div class="tower">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
+    <canvas id="tower-canvas"></canvas>
 
+    <p class="hint">Tap disc to select &bull; Tap tower to move</p>
+
+    <div class="win-overlay">
+        <div class="win-card">
+            <div class="win-title">Solved!</div>
+            <div class="win-info">Completed in <span class="win-moves"></span> moves</div>
+            <button class="restart-win">Play Again</button>
+        </div>
+    </div>
 </div>
 <script src="main.js"></script>
 </body>
